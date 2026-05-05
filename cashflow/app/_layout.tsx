@@ -7,6 +7,7 @@ import 'react-native-reanimated';
 import { AuthProvider, useAuth } from '@/context/auth-context';
 import { FinanceProvider } from '@/context/finance-context';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import CurrencyPicker from '@/components/ui/currency-picker';
 
 function RootNavigator() {
   const { initialized, session } = useAuth();
@@ -34,6 +35,7 @@ export default function RootLayout() {
       <AuthProvider>
         <FinanceProvider>
           <RootNavigator />
+          <CurrencyPicker />
         </FinanceProvider>
       </AuthProvider>
       <StatusBar style="auto" />
