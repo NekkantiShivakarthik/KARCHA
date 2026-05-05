@@ -8,6 +8,28 @@ import { Platform } from 'react-native';
 const tintColorLight = '#0b3c49';
 const tintColorDark = '#fff';
 
+// WealthPath Premium Color Palette
+export const WealthPathColors = {
+  // Base palette
+  charcoal: '#1a1f26',
+  darkCharcoal: '#0f1318',
+  slateTeal: '#2d4a54',
+  lightSlateTeal: '#3d5a64',
+  
+  // Accent colors
+  emeraldGreen: '#10c876', // Positive cashflow
+  softAmber: '#ffc857', // Warnings
+  vibrantNeon: '#00ff88',
+  
+  // Neutral
+  frostedGlass: 'rgba(255, 255, 255, 0.1)',
+  frostedGlassDark: 'rgba(255, 255, 255, 0.08)',
+  
+  // Gradients
+  gradientStart: '#1a1f26',
+  gradientEnd: '#2d4a54',
+};
+
 export const Colors = {
   light: {
     text: '#16232c',

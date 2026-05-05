@@ -1,6 +1,7 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Fonts } from '@/constants/theme';
+import { useAuth } from '@/context/auth-context';
 import { useFinance } from '@/context/finance-context';
 import { toCurrency } from '@/lib/finance-ai';
 
@@ -11,6 +12,7 @@ const SEVERITY_COLOR = {
 };
 
 export default function InsightsScreen() {
+  const { signOut, busy } = useAuth();
   const { insights, summary } = useFinance();
 
   return (
@@ -21,6 +23,9 @@ export default function InsightsScreen() {
           <Text style={styles.heroBody}>
             Personalized nudges are generated from your monthly behavior and 50/30/20 performance.
           </Text>
+          <Pressable onPress={signOut} disabled={busy} style={[styles.signOutBtn, busy ? styles.signOutBtnBusy : null]}>
+            <Text style={styles.signOutText}>{busy ? 'Working...' : 'Sign Out'}</Text>
+          </Pressable>
         </View>
 
         <View style={styles.summaryGrid}>
@@ -95,6 +100,24 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontFamily: Fonts.sans,
   },
+  signOutBtn: {
+    marginTop: 10,
+    alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#79460f',
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+  },
+  signOutBtnBusy: {
+    opacity: 0.55,
+  },
+  signOutText: {
+    color: '#533007',
+    fontFamily: Fonts.rounded,
+    fontSize: 12,
+  },
   summaryGrid: {
     flexDirection: 'row',
     gap: 10,
@@ -167,4 +190,3 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
-
