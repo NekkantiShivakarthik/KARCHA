@@ -49,6 +49,8 @@ An Expo MVP implementation now lives in [`cashflow/`](cashflow).
 - Root shortcuts:
   - `npm run bootstrap`
   - `npm run start`
+- Authentication:
+  - Configure Supabase keys in `cashflow/.env` using `cashflow/.env.example`.
 - Main screens:
   - `cashflow/app/(tabs)/index.tsx` (Dashboard)
   - `cashflow/app/(tabs)/transactions.tsx` (Auto-tagging + entry)

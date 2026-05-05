@@ -8,6 +8,10 @@ WealthPath is an AI-assisted personal finance app that helps users break financi
 
 ## Implemented Features
 
+- **Authentication**
+  - Supabase email/password login
+  - Account registration from the same login screen
+  - Persistent auth session and protected app routes
 - **Dashboard tab**
   - Monthly cashflow snapshot
   - Live 50/30/20 ratio bars with targets
@@ -35,6 +39,15 @@ npm install
 npm run start
 ```
 
+## Supabase Setup
+
+1. Copy `.env.example` to `.env` inside `cashflow/`.
+2. Add your project values:
+   - `EXPO_PUBLIC_SUPABASE_URL`
+   - `EXPO_PUBLIC_SUPABASE_ANON_KEY`
+3. In Supabase dashboard, enable Email auth provider.
+4. Restart Expo after changing env values.
+
 Then press:
 
 - `a` for Android emulator
@@ -46,8 +59,10 @@ Then press:
 - `app/(tabs)/index.tsx`: Dashboard
 - `app/(tabs)/transactions.tsx`: Transaction entry and overrides
 - `app/(tabs)/insights.tsx`: AI insight feed
+- `app/(auth)/index.tsx`: Login/register screen
+- `context/auth-context.tsx`: Supabase auth session management
 - `context/finance-context.tsx`: Shared finance state
+- `lib/supabase.ts`: Supabase client
 - `lib/finance-ai.ts`: Classification, 50/30/20 summary, and insights logic
 - `lib/demo-data.ts`: Seed transactions
 - `lib/types.ts`: Domain types
-
