@@ -89,19 +89,19 @@ export default function WealthPathDashboard() {
         <View style={styles.quickStatsContainer}>
           <QuickStatCard
             label="Income"
-            amount={`$${Math.round(summary.income)}`}
+            amount={`₹${Math.round(summary.income)}`}
             icon="arrow-down"
             color={WealthPathColors.emeraldGreen}
           />
           <QuickStatCard
             label="Total Spend"
-            amount={`$${Math.round(summary.needs + summary.wants)}`}
+            amount={`₹${Math.round(summary.needs + summary.wants)}`}
             icon="arrow-up"
             color={WealthPathColors.softAmber}
           />
           <QuickStatCard
             label="Savings"
-            amount={`$${Math.round(summary.savings)}`}
+            amount={`₹${Math.round(summary.savings)}`}
             icon="trending-up"
             color={WealthPathColors.vibrantNeon}
           />

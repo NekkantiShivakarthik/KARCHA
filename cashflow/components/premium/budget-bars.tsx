@@ -144,7 +144,7 @@ export function Premium505020Bars() {
           label="Needs"
           ratio={summary.needsRatio}
           target={0.5}
-          amount={`$${Math.round(summary.needs)}`}
+          amount={`₹${Math.round(summary.needs)}`}
           color={WealthPathColors.emeraldGreen}
           delay={100}
         />
@@ -152,7 +152,7 @@ export function Premium505020Bars() {
           label="Wants"
           ratio={summary.wantsRatio}
           target={0.3}
-          amount={`$${Math.round(summary.wants)}`}
+          amount={`₹${Math.round(summary.wants)}`}
           color={WealthPathColors.softAmber}
           delay={200}
         />
@@ -160,7 +160,7 @@ export function Premium505020Bars() {
           label="Savings"
           ratio={summary.savingsRatio}
           target={0.2}
-          amount={`$${Math.round(summary.savings)}`}
+          amount={`₹${Math.round(summary.savings)}`}
           color={WealthPathColors.vibrantNeon}
           delay={300}
         />

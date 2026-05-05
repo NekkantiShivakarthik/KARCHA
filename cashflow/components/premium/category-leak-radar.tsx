@@ -68,7 +68,7 @@ export function CategoryLeakRadar() {
           {/* Center content */}
           <View style={styles.donutCenter}>
             <Text style={styles.centerAmount}>
-              ${Math.round(totalAmount)}
+              ₹{Math.round(totalAmount)}
             </Text>
             <Text style={styles.centerLabel}>Total Spend</Text>
           </View>
@@ -182,7 +182,7 @@ function HeatCell({ point }: { point: HeatPoint }) {
       ]}
     >
       <Text style={styles.heatCellCategory}>{point.category}</Text>
-      <Text style={styles.heatCellAmount}>${Math.round(point.amount)}</Text>
+      <Text style={styles.heatCellAmount}>₹{Math.round(point.amount)}</Text>
       <Text style={styles.heatCellPercent}>{point.percentage.toFixed(1)}%</Text>
     </View>
   );
