@@ -3,7 +3,7 @@ import { type Session } from '@supabase/supabase-js'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
-import { Receipt, Info, Clock, Moon, Sun, Users, ChartBarHorizontal, Database, CaretUpDown, Plus, GearSix, CreditCard, Bell, SignOut, ArrowsClockwise, SquaresFour, UserCircle } from '@phosphor-icons/react'
+import { Receipt, Info, Clock, Moon, Sun, Users, ChartBarHorizontal, Database, CaretUpDown, Plus, GearSix, CreditCard, Bell, SignOut, ArrowsClockwise, SquaresFour, UserCircle, ChatTeardropText } from '@phosphor-icons/react'
 import BillsTab from '@/components/BillsTab'
 import InfoTab from '@/components/InfoTab'
 import ActivityTab from '@/components/ActivityTab'
@@ -12,6 +12,7 @@ import DataTab from '@/components/DataTab'
 import PersonalOweTab from '@/components/PersonalOweTab'
 import DashboardOverview from '@/components/DashboardOverview'
 import FriendProfilesTab from '@/components/FriendProfilesTab'
+import BudgetAiTab from '@/components/BudgetAiTab'
 import ManageMembersDialog from '@/components/ManageMembersDialog'
 import MemberAvatar from '@/components/MemberAvatar'
 import AccountPage from '@/components/AccountPage'
@@ -45,6 +46,7 @@ import {
   SidebarTrigger,
   SidebarRail,
 } from '@/components/ui/sidebar'
+import { cn } from '@/lib/utils'
 import {
   expenseService, 
   tripInfoService, 
@@ -395,6 +397,7 @@ function App() {
         { id: 'owe', label: 'Ledger', icon: CreditCard },
         { id: 'info', label: 'Personal Notes', icon: Info },
         { id: 'analytics', label: 'Analytics', icon: ChartBarHorizontal },
+        { id: 'ai', label: 'AI Planner', icon: ChatTeardropText },
         { id: 'activity', label: 'Activity', icon: Clock, badge: unreadActivities },
         { id: 'workspace', label: 'Personal Workspace', icon: Users },
       ]
@@ -404,10 +407,13 @@ function App() {
         { id: 'bills', label: 'Bills', icon: Receipt },
         { id: 'info', label: 'Workspace Notes', icon: Info },
         { id: 'analytics', label: 'Analytics', icon: ChartBarHorizontal },
+        { id: 'ai', label: 'AI Planner', icon: ChatTeardropText },
         { id: 'data', label: 'Export', icon: Database },
         { id: 'workspace', label: 'Workspace', icon: Users },
         { id: 'activity', label: 'Activity', icon: Clock, badge: unreadActivities },
       ]
+
+  const activeTabLabel = activeTab === 'account' ? 'Account' : navItems.find((item) => item.id === activeTab)?.label || 'Dashboard'
 
   useEffect(() => {
     if (activeTab === 'account') return
@@ -440,7 +446,7 @@ function App() {
   }
 
   return (
-    <SidebarProvider >
+    <SidebarProvider className="workspace-shell">
       <Toaster />
       <ManageMembersDialog
         open={showMembersDialog}
@@ -462,7 +468,7 @@ function App() {
         <SidebarHeader className="p-3 group-data-[collapsible=icon]:p-1">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="w-full rounded-lg bg-card/70 px-2 py-2 text-left hover:bg-accent/40 transition-colors group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-1.5 group-data-[collapsible=icon]:text-center">
+              <button className="surface-button w-full rounded-xl px-2 py-2 text-left transition-colors group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-1.5 group-data-[collapsible=icon]:text-center">
                 <div className="flex items-center gap-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
                     <Receipt className="h-4 w-4 text-primary" weight="duotone" />
@@ -503,6 +509,7 @@ function App() {
                       isActive={activeTab === item.id}
                       onClick={() => setActiveTab(item.id)}
                       tooltip={item.label}
+                      className="rounded-xl data-[active=true]:shadow-sm data-[active=true]:ring-1 data-[active=true]:ring-sidebar-border/60"
                     >
                       <item.icon className="h-4 w-4" weight={activeTab === item.id ? 'fill' : 'regular'} />
                       <span>{item.label}</span>
@@ -521,7 +528,7 @@ function App() {
         <SidebarFooter className="p-2 group-data-[collapsible=icon]:p-1">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="w-full rounded-lg bg-card/70 px-2 py-2 text-left hover:bg-accent/40 transition-colors group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-1.5 group-data-[collapsible=icon]:text-center">
+              <button className="surface-button w-full rounded-xl px-2 py-2 text-left transition-colors group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-1.5 group-data-[collapsible=icon]:text-center">
                 <div className="flex items-center gap-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0">
                   {currentMember ? (
                     <MemberAvatar member={currentMember} size="sm" className="h-8 w-8 shrink-0" />
@@ -558,7 +565,7 @@ function App() {
               )}
               <DropdownMenuItem onClick={handleThemeToggle}>
                 {isDark ? <Sun className="h-4 w-4 mr-2" /> : <Moon className="h-4 w-4 mr-2" />}
-                {isDark ? 'Light Mode' : 'Dark Mode'}
+                {isDark ? 'Switch to Light' : 'Switch to Dark'}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setActiveTab('account')}>
@@ -574,26 +581,51 @@ function App() {
         <SidebarRail />
       </Sidebar>
 
-      <SidebarInset>
-        <header className="sticky top-0 z-10 flex items-center gap-2 bg-card/85 backdrop-blur-xl border-b border-border/50 px-4 py-3">
+      <SidebarInset className="app-inset">
+        <header className="topbar-glass sticky top-0 z-10 flex items-center gap-3 px-4 py-3">
           <SidebarTrigger className="-ml-1" />
-          <div className="h-4 w-px bg-border" />
-          <h2 className="text-base font-semibold text-foreground capitalize">
-            {activeTab === 'account' ? 'Account' : navItems.find(n => n.id === activeTab)?.label}
+          <div className="h-4 w-px bg-border/70" />
+          <h2 className="min-w-0 truncate text-base font-semibold text-foreground capitalize">
+            {activeTabLabel}
           </h2>
-          {activeTab !== 'account' && (
-            <Badge
-              variant="outline"
-              className={isPersonalWorkspace ? 'border-emerald-500/50 text-emerald-700 dark:text-emerald-400' : 'border-sky-500/50 text-sky-700 dark:text-sky-400'}
-            >
-              {isPersonalWorkspace ? 'Personal' : 'Shared'}
-            </Badge>
-          )}
 
+          <div className="ml-auto flex items-center gap-2">
+            {activeTab !== 'account' && (
+              <Badge
+                variant="outline"
+                className={isPersonalWorkspace ? 'border-emerald-500/50 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300' : 'border-sky-500/50 bg-sky-500/10 text-sky-700 dark:text-sky-300'}
+              >
+                {isPersonalWorkspace ? 'Personal' : 'Shared'}
+              </Badge>
+            )}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleThemeToggle}
+              className="theme-switch-btn h-9 rounded-full border-border/70 bg-background/70 px-2.5 backdrop-blur-sm"
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              <span className="theme-switch-track">
+                <Sun
+                  className={cn('h-3.5 w-3.5 transition-colors', isDark ? 'text-muted-foreground/70' : 'text-amber-500')}
+                  weight={isDark ? 'regular' : 'fill'}
+                />
+                <Moon
+                  className={cn('h-3.5 w-3.5 transition-colors', isDark ? 'text-sky-300' : 'text-muted-foreground/70')}
+                  weight={isDark ? 'fill' : 'regular'}
+                />
+                <span className={cn('theme-switch-thumb', isDark ? 'translate-x-5' : 'translate-x-0')} />
+              </span>
+              <span className="hidden text-xs font-medium text-foreground/80 sm:inline">
+                {isDark ? 'Dark' : 'Light'}
+              </span>
+            </Button>
+          </div>
         </header>
 
-        <main className="p-4 sm:p-6">
-          <div className="panel-card p-3 sm:p-4">
+        <main className="content-shell p-4 sm:p-6">
+          <div className="panel-card p-3 sm:p-4 md:p-5">
           <div className="space-y-4">
             {activeTab === 'dashboard' && (
               <DashboardOverview
@@ -649,6 +681,14 @@ function App() {
                 expenses={expenses}
                 activities={activities}
                 members={effectiveMembers}
+                isPersonalWorkspace={isPersonalWorkspace}
+              />
+            )}
+            {activeTab === 'ai' && (
+              <BudgetAiTab
+                expenses={expenses}
+                members={effectiveMembers}
+                workspaceName={getWorkspaceDisplayName(currentGroup)}
                 isPersonalWorkspace={isPersonalWorkspace}
               />
             )}
