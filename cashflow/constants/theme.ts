@@ -5,16 +5,16 @@
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
+const tintColorLight = '#0b3c49';
 const tintColorDark = '#fff';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
+    text: '#16232c',
+    background: '#f4f1ea',
     tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
+    icon: '#6f7f88',
+    tabIconDefault: '#6f7f88',
     tabIconSelected: tintColorLight,
   },
   dark: {
@@ -41,13 +41,13 @@ export const Fonts = Platform.select({
   default: {
     sans: 'normal',
     serif: 'serif',
-    rounded: 'normal',
+    rounded: 'sans-serif-medium',
     mono: 'monospace',
   },
   web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    serif: "Georgia, 'Times New Roman', serif",
-    rounded: "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
+    sans: "'Avenir Next', 'Trebuchet MS', 'Segoe UI', sans-serif",
+    serif: "'Iowan Old Style', 'Palatino Linotype', Georgia, serif",
+    rounded: "'Avenir Next Rounded', 'Trebuchet MS', 'Gill Sans', sans-serif",
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });

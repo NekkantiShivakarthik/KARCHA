@@ -1,50 +1,53 @@
-# Welcome to your Expo app 👋
+# WealthPath Mobile App (Expo)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+WealthPath is an AI-assisted personal finance app that helps users break financial fog by:
 
-## Get started
+- auto-classifying transactions,
+- auditing spending against the 50/30/20 framework,
+- generating proactive savings nudges.
 
-1. Install dependencies
+## Implemented Features
 
-   ```bash
-   npm install
-   ```
+- **Dashboard tab**
+  - Monthly cashflow snapshot
+  - Live 50/30/20 ratio bars with targets
+  - Category leak radar
+- **Transactions tab**
+  - Manual transaction logging
+  - AI-like categorization preview (merchant pattern + rule engine)
+  - Confidence and explanation per classification
+  - Manual bucket overrides (Needs/Wants/Savings)
+- **Insights tab**
+  - Subscription creep detection
+  - Wants-overage alerts
+  - Savings gap nudges
+  - Estimated monthly impact per recommendation
 
-2. Start the app
+## Tech Stack
 
-   ```bash
-   npx expo start
-   ```
+- Expo Router + React Native + TypeScript
+- Local in-memory data state through React Context
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Run Locally
 
 ```bash
-npm run reset-project
+npm install
+npm run start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Then press:
 
-## Learn more
+- `a` for Android emulator
+- `i` for iOS simulator
+- `w` for web
 
-To learn more about developing your project with Expo, look at the following resources:
+## Project Structure
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- `app/(tabs)/index.tsx`: Dashboard
+- `app/(tabs)/transactions.tsx`: Transaction entry and overrides
+- `app/(tabs)/insights.tsx`: AI insight feed
+- `context/finance-context.tsx`: Shared finance state
+- `lib/finance-ai.ts`: Classification, 50/30/20 summary, and insights logic
+- `lib/demo-data.ts`: Seed transactions
+- `lib/types.ts`: Domain types
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

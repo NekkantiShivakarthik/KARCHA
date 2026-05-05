@@ -41,7 +41,16 @@ For implementation details, see:
 - [`docs/technical-blueprint.md`](docs/technical-blueprint.md)
 - [`docs/mvp-roadmap.md`](docs/mvp-roadmap.md)
 
+## Mobile App Build
+
+An Expo MVP implementation now lives in [`cashflow/`](cashflow).
+
+- App docs and run steps: [`cashflow/README.md`](cashflow/README.md)
+- Main screens:
+  - `cashflow/app/(tabs)/index.tsx` (Dashboard)
+  - `cashflow/app/(tabs)/transactions.tsx` (Auto-tagging + entry)
+  - `cashflow/app/(tabs)/insights.tsx` (AI nudges)
+
 ## Vision
 
 WealthPath should behave like a GPS for money: detect drift early, recalculate fast, and guide users back toward long-term savings goals.
-
