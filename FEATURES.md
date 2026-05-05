@@ -1,0 +1,26 @@
+# Expensio Features
+
+- Email/password authentication with sign in and sign up.
+- Multi-account support with saved sessions, quick account switching, and account removal.
+- Automatic personal workspace creation for each user.
+- Shared group workspaces for collaborative expense tracking.
+- Group creation and group switching.
+- Invite-based group joining using shareable invite codes.
+- Group member management with role updates (owner/admin/member) and member removal.
+- Expense creation, editing, and deletion.
+- Multiple split methods: equal, selected-people equal, percentage, exact amount, ratio/parts, shares, and transfer settlement.
+- Custom expense categories in addition to default categories.
+- Expense photo attachments with upload, preview, and removal.
+- Expense search and filtering by text, category, and payer.
+- Live balance summary with automatic settlement suggestions.
+- Per-member spending/share breakdown.
+- Trip information board with add/edit/delete entries.
+- Pin/unpin important trip info entries.
+- Trip info photo attachments and image gallery viewing.
+- Activity timeline with search and filters by type, action, and member.
+- Analytics dashboard with overview, category, and member insights.
+- Visual charts for category distribution, member spending, balances, trends over time, and activity distribution.
+- PDF export for analytics and a full consolidated trip report.
+- Account management for profile updates, avatar URL, email change, and password change.
+- Theme switching (dark/light mode).
+- Group-scoped cloud data persistence through Supabase.

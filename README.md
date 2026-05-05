@@ -1,61 +1,23 @@
-# AI-Powered WealthPath
+# ✨ Welcome to Your Spark Template!
+You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
 
-AI-Powered WealthPath is a personal finance app that turns raw transaction data into practical coaching.  
-Instead of asking users to manually track every expense, it automates categorization, audits spending against the 50/30/20 framework, and gives proactive savings nudges before month-end.
+This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
 
-## Why This Matters
+🚀 What's Inside?
+- A clean, minimal Spark environment
+- Pre-configured for local development
+- Ready to scale with your ideas
+  
+🧠 What Can You Do?
 
-Most users have digital payments, but still lack spending clarity. This creates financial fog:
+Right now, this is just a starting point — the perfect place to begin building and testing your Spark applications.
 
-- You know money is leaving your account.
-- You do not know exactly where it is going.
-- You do not know what to change next.
+🧹 Just Exploring?
+No problem! If you were just checking things out and don’t need to keep this code:
 
-WealthPath solves this by combining bookkeeping automation with AI-driven insight.
+- Simply delete your Spark.
+- Everything will be cleaned up — no traces left behind.
 
-## Core Features
+📄 License For Spark Template Resources 
 
-- Auto-tagging of transactions using merchant and metadata signals.
-- Real-time 50/30/20 budget compliance tracking.
-- Spending trend summaries and category leak detection.
-- Predictive alerts for subscription creep and spending spikes.
-- Personalized savings nudges generated from user behavior.
-
-## Product Principles
-
-- Frictionless capture over manual logging.
-- Explainable categorization (show why a transaction was classified).
-- Actionable advice over passive charts.
-- Privacy-first architecture for sensitive financial data.
-
-## MVP Scope
-
-- Transaction ingestion (manual import or bank feed).
-- AI-assisted categorization engine.
-- Needs/Wants/Savings ratio auditor.
-- Insight feed and alerting for unusual patterns.
-- Dashboard with monthly cash flow and category breakdown.
-
-For implementation details, see:
-
-- [`docs/technical-blueprint.md`](docs/technical-blueprint.md)
-- [`docs/mvp-roadmap.md`](docs/mvp-roadmap.md)
-
-## Mobile App Build
-
-An Expo MVP implementation now lives in [`cashflow/`](cashflow).
-
-- App docs and run steps: [`cashflow/README.md`](cashflow/README.md)
-- Root shortcuts:
-  - `npm run bootstrap`
-  - `npm run start`
-- Authentication:
-  - Configure Supabase keys in `cashflow/.env` using `cashflow/.env.example`.
-- Main screens:
-  - `cashflow/app/(tabs)/index.tsx` (Dashboard)
-  - `cashflow/app/(tabs)/transactions.tsx` (Auto-tagging + entry)
-  - `cashflow/app/(tabs)/insights.tsx` (AI nudges)
-
-## Vision
-
-WealthPath should behave like a GPS for money: detect drift early, recalculate fast, and guide users back toward long-term savings goals.
+The Spark Template files and resources from GitHub are licensed under the terms of the MIT license, Copyright GitHub, Inc.
