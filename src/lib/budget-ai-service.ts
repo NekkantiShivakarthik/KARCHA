@@ -1,8 +1,28 @@
 import type { Expense, Member } from '@/lib/supabase-service'
 
-const OPENAI_API_URL = 'https://api.openai.com/v1/responses'
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY?.trim() || ''
-const OPENAI_MODEL = import.meta.env.VITE_OPENAI_MODEL?.trim() || 'gpt-4.1-mini'
+const normalizeResponsesUrl = (baseUrl: string) => {
+  const trimmed = baseUrl.trim().replace(/\/+$/, '')
+  if (trimmed.endsWith('/v1/responses')) return trimmed
+  if (trimmed.endsWith('/v1')) return `${trimmed}/responses`
+  return `${trimmed}/v1/responses`
+}
+
+const openAiBaseUrl =
+  import.meta.env.VITE_OPENAI_BASE_URL?.trim() ||
+  import.meta.env.ai_base_url?.trim() ||
+  'https://api.openai.com'
+
+const OPENAI_API_URL = normalizeResponsesUrl(openAiBaseUrl)
+const OPENAI_API_KEY =
+  import.meta.env.VITE_OPENAI_API_KEY?.trim() ||
+  import.meta.env.VITE_AI_API_KEY?.trim() ||
+  import.meta.env.ai_api_key?.trim() ||
+  ''
+const OPENAI_MODEL =
+  import.meta.env.VITE_OPENAI_MODEL?.trim() ||
+  import.meta.env.VITE_AI_MODEL?.trim() ||
+  import.meta.env.ai_model?.trim() ||
+  'gpt-4.1-mini'
 const MAX_RECENT_EXPENSES = 35
 const MAX_HISTORY_MESSAGES = 10
 
@@ -170,7 +190,7 @@ export const hasBudgetAiConfig = () => OPENAI_API_KEY.length > 0
 
 export const askBudgetAssistant = async (input: AskBudgetAssistantInput): Promise<string> => {
   if (!OPENAI_API_KEY) {
-    throw new Error('Missing VITE_OPENAI_API_KEY in your .env file.')
+    throw new Error('Missing AI API key in .env (VITE_OPENAI_API_KEY or ai_api_key).')
   }
 
   const question = input.question.trim()

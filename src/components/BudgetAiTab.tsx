@@ -126,7 +126,7 @@ export default function BudgetAiTab({
                 AI key is missing
               </p>
               <p className="text-sm text-amber-700/85 dark:text-amber-100/90">
-                Add <code>VITE_OPENAI_API_KEY</code> in your <code>.env</code> file and restart the app.
+                Add <code>VITE_OPENAI_API_KEY</code> or <code>ai_api_key</code> in your <code>.env</code> file and restart the app.
               </p>
             </div>
           </CardContent>

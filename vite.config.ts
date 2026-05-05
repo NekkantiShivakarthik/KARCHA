@@ -12,6 +12,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  envPrefix: ['VITE_', 'ai_'],
   resolve: {
     alias: {
       '@': resolve(projectRoot, 'src')
