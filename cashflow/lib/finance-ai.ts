@@ -340,11 +340,15 @@ export function generateInsights(transactions: Transaction[], summary: BudgetSum
   return compiled.sort((a, b) => b.estimatedImpact - a.estimatedImpact);
 }
 
+import { getCurrency } from './currency';
+
 export function toCurrency(value: number): string {
-  return new Intl.NumberFormat('en-US', {
+  const settings = getCurrency();
+  return new Intl.NumberFormat(settings.locale || 'en-US', {
     style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
+    currency: settings.code,
+    maximumFractionDigits:
+      typeof settings.maximumFractionDigits === 'number' ? settings.maximumFractionDigits : 0,
   }).format(value);
 }
 
