@@ -181,16 +181,24 @@ const extractOutputText = (payload: any): string => {
   return texts.join('\n\n').trim()
 }
 
-const toApiMessage = (message: BudgetChatMessage) => ({
-  role: message.role,
-  content: [{ type: 'input_text', text: message.content }],
-})
+const toApiMessage = (message: BudgetChatMessage) =>
+  message.role === 'assistant'
+    ? {
+        role: 'assistant',
+        // Assistant history should be passed as output_text so the Responses API
+        // treats it as prior model output instead of fresh user input.
+        content: [{ type: 'output_text', text: message.content }],
+      }
+    : {
+        role: 'user',
+        content: [{ type: 'input_text', text: message.content }],
+      }
 
 export const hasBudgetAiConfig = () => OPENAI_API_KEY.length > 0
 
 export const askBudgetAssistant = async (input: AskBudgetAssistantInput): Promise<string> => {
   if (!OPENAI_API_KEY) {
-    throw new Error('Missing AI API key in .env (VITE_OPENAI_API_KEY or ai_api_key).')
+    throw new Error('Missing AI API key in .env (VITE_OPENAI_API_KEY, VITE_AI_API_KEY, or ai_api_key).')
   }
 
   const question = input.question.trim()
@@ -199,9 +207,16 @@ export const askBudgetAssistant = async (input: AskBudgetAssistantInput): Promis
   }
 
   const workspaceContext = buildWorkspaceContext(input)
-  const history = (input.history || [])
+  const historySource = (input.history || [])
     .map((message) => ({ ...message, content: message.content.trim() }))
     .filter((message) => message.content.length > 0)
+  const history =
+    historySource.length > 0 &&
+    historySource[historySource.length - 1]?.role === 'user' &&
+    historySource[historySource.length - 1]?.content === question
+      ? historySource.slice(0, -1)
+      : historySource
+  const historyMessages = history
     .slice(-MAX_HISTORY_MESSAGES)
     .map(toApiMessage)
 
@@ -215,37 +230,45 @@ export const askBudgetAssistant = async (input: AskBudgetAssistantInput): Promis
     'When asked for a plan, provide: Budget Snapshot, Suggested Limits, and 3 concrete next actions.',
   ].join(' ')
 
-  const response = await fetch(OPENAI_API_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: OPENAI_MODEL,
-      input: [
-        {
-          role: 'system',
-          content: [{ type: 'input_text', text: systemPrompt }],
-        },
-        ...history,
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'input_text',
-              text: [
-                'Workspace context:',
-                workspaceContext,
-                '',
-                `User question: ${question}`,
-              ].join('\n'),
-            },
-          ],
-        },
-      ],
-    }),
-  })
+  let response: Response
+  try {
+    response = await fetch(OPENAI_API_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        instructions: systemPrompt,
+        input: [
+          ...historyMessages,
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'input_text',
+                text: [
+                  'Workspace context:',
+                  workspaceContext,
+                  '',
+                  `User question: ${question}`,
+                ].join('\n'),
+              },
+            ],
+          },
+        ],
+      }),
+    })
+  } catch (error) {
+    const fetchMessage =
+      error instanceof Error && error.message.trim()
+        ? error.message.trim()
+        : 'Network request failed.'
+    throw new Error(
+      `Could not reach the AI service (${fetchMessage}). If this keeps happening in browser, route this request through a server-side proxy.`,
+    )
+  }
 
   const payload = await response.json().catch(() => null)
 
