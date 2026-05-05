@@ -46,6 +46,9 @@ For implementation details, see:
 An Expo MVP implementation now lives in [`cashflow/`](cashflow).
 
 - App docs and run steps: [`cashflow/README.md`](cashflow/README.md)
+- Root shortcuts:
+  - `npm run bootstrap`
+  - `npm run start`
 - Main screens:
   - `cashflow/app/(tabs)/index.tsx` (Dashboard)
   - `cashflow/app/(tabs)/transactions.tsx` (Auto-tagging + entry)

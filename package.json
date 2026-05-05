@@ -1,0 +1,12 @@
+{
+  "name": "wealthpath-workspace",
+  "private": true,
+  "scripts": {
+    "bootstrap": "npm --prefix cashflow install",
+    "start": "npm --prefix cashflow run start",
+    "android": "npm --prefix cashflow run android",
+    "ios": "npm --prefix cashflow run ios",
+    "web": "npm --prefix cashflow run web",
+    "lint": "npm --prefix cashflow run lint"
+  }
+}
